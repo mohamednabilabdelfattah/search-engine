@@ -1,7 +1,6 @@
 import java.sql.*;
 import java.util.Queue;
 import java.util.LinkedList;
-import javafx.util.Pair;
 import java.io.*;
 import java.net.URL;
 import java.net.MalformedURLException;
@@ -12,77 +11,72 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Crawler {
-	private static Queue<Pair<Integer, String>> URLS = new LinkedList<>();
+	private static Queue<String> URLS = new LinkedList<>();
 	
-	public static void pushInQueue(Connection dbConnection) throws SQLException {
+	public static void pushSeedInQueue(Connection dbConnection) throws SQLException {
 		
 		Statement stmt = dbConnection.createStatement();
-		ResultSet result = stmt.executeQuery("SELECT URLID, URL FROM akml.URLS;"); // REQUIRED: Get only 50(seed set)
-		String URL;
-		Integer URLID;
+		ResultSet result = stmt.executeQuery("SELECT URL FROM akml.urls LIMIT 50;"); // REQUIRED: frequency of visited pages every crawling
+		String URLName;
+		
 		while(result.next()) {
-		URL = result.getString("URL");
-		URLID = result.getInt("URLID");
-		Pair<Integer, String> URLPair = new Pair<Integer, String>(URLID, URL);
-		URLS.add(URLPair);
+		URLName = result.getString("URL");
+		URLS.add(URLName);
 		}
 	}
 	
-	public static void pushURLInQueueAndDatabase(Connection dbConnection, String URLName) throws SQLException {
-		Pair<Integer, String> URLPair = new Pair<Integer, String>(0, URLName);
+	public static void pushURLInQueueAndDatabase(Connection dbConnection, String URLName) throws SQLException, IOException {
+		//robot.txt
 		Statement stmt = dbConnection.createStatement();
-		ResultSet result = stmt.executeQuery("SELECT URL FROM akml.URLS WHERE URL =" + String.valueOf(URLPair.getValue()) + ";"); 
+		ResultSet result = stmt.executeQuery("SELECT URL FROM akml.urls WHERE URL like'" + URLName + "';"); 
 		if(!result.next()) {
-			stmt.executeQuery("INSERT INTO akml.URLS(URL) VALUES(" + URLPair.getValue() + ");" );
-			
-			if(!URLS.contains(URLPair))
-				URLS.add(URLPair);
+			String URLCompactString = Compact_String.extractCompactString(URLName).replaceAll("'", "\\\\\\\\\\\\\\\\\\\\'");// 5*4 = 20 (Every \ needs 3 \ to skip it and we need 5 in query syntax)
+			ResultSet resultCompactString = stmt.executeQuery("SELECT compactString FROM akml.urls WHERE compactString like'" + URLCompactString + "';"); 
+			if(!resultCompactString.next()) {
+				String query = "INSERT INTO akml.urls(URL, compactString)"
+				        + " values (?,?)";
+				PreparedStatement preparedStmt = dbConnection.prepareStatement(query);
+				preparedStmt.setString (1, URLName);
+				preparedStmt.setString (2, URLCompactString);
+				
+				preparedStmt.execute();
+				URLS.add(URLName);
+			}
 		}
-		
 	}
 	
-	public static void fetchPage(Pair<Integer, String> URLPair) {
-		Integer URLID = URLPair.getKey();
-		String URLName = URLPair.getValue();
-		try {
-			Document doc = Jsoup.connect(URLName).get();
-	        Elements links = doc.select("a[href]");
-	        for (Element link : links) {
-	            System.out.println(link.attr("abs:href"));
-	        }
-	        
-			URL url = new URL(URLName);
-			BufferedReader readBuffer = new BufferedReader(new InputStreamReader(url.openStream()));
-			BufferedWriter writeBuffer = new BufferedWriter(new FileWriter(String.valueOf(URLID) + ".txt"));
-			String line;
-            while ((line = readBuffer.readLine()) != null) {
-            	writeBuffer.write(line);
-            }
-  
-            readBuffer.close();
-            writeBuffer.close();
-            System.out.println("Successfully Downloaded.");
-			
-		}catch(MalformedURLException mException) {
-			System.out.println("There is an error in fetching page.");
-			System.out.println(mException);
-		}catch(IOException ioException) {
-			System.out.println("There is an error in reading and writing the file.");
-			System.out.println(ioException);
-		}
-		
-		
-	}
-	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		Queue<Pair<Integer, String>> URLS = new LinkedList<>();
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException { // crawlerExecute()
 		DatabaseConnection dbManager = new DatabaseConnection();
 		Connection dbConnection = dbManager.connect();
-		pushInQueue(dbConnection, URLS);
-		System.out.println(URLS);
-		Pair<Integer, String> URLPair = new Pair<Integer, String>(45, "https://try.jsoup.org/");
-		fetchPage(URLPair);
-		
+		pushSeedInQueue(dbConnection);
+		int crawlingIndex = 0;
+		while(!URLS.isEmpty()) {
+			try {
+			if(crawlingIndex == 5000)
+				break;
+			String URLName = URLS.poll();
+			Document doc = extract.downloadFile(URLName);
+			
+			if(doc != null) {
+				Elements links = extract.extractLinks(doc);
+				String linkName = "";
+				int linkURLSIndex = 0;
+				for(Element link:links) {
+					if(linkURLSIndex==50) {
+						break;
+					}
+					linkName = link.attr("abs:href");
+					if(extract.isURLValid(linkName))
+						pushURLInQueueAndDatabase(dbConnection, linkName);
+					linkURLSIndex++;
+				}
+			}
+			crawlingIndex++;
+			} catch(Exception e) {
+				continue;
+			}
+		}
+		//String URLTest = "https://www.bbc.com/";
 	}
 
 }
