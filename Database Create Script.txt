@@ -1,0 +1,17 @@
+DROP DATABASE if exists `akml`;
+CREATE DATABASE `akml` /*!40100 DEFAULT CHARACTER SET latin1 */;
+use `akml`;
+CREATE TABLE `crawledurls` (
+  `URL` varchar(500) NOT NULL,
+  `compactString` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`URL`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `nonecraweldurls` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `URL` varchar(500) DEFAULT NULL,
+  `compactString` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `URL_UNIQUE` (`URL`),
+  UNIQUE KEY `compactString_UNIQUE` (`compactString`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
