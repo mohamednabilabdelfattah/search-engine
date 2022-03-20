@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.Queue;
+import java.util.Scanner;
 import java.util.LinkedList;
 import java.io.*;
 import java.net.URL;
@@ -9,9 +10,30 @@ import org.jsoup.helper.Validate;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import java.lang.Object;
 
-public class Crawler {
+public class Crawler implements Runnable {
 	private static Queue<String> URLS = new LinkedList<>();
+    public void run() {
+    	 
+    	System.out.println("Hello from a thread!");
+
+    	// 5. Uncomment the following to see 2 threads running! 
+    	
+    	for (int i = 0 ; i < 5 ; i++) {
+       		System.out.println("Hello from a thread!");
+			
+			try {
+				 //Thread.sleep causes the current thread to suspend execution for a specified period
+				 Thread.sleep(1000);                 //1000 milliseconds is one second.
+			
+			//This is an exception that sleep throws when another thread interrupts the current thread while sleep is active.
+			} catch(InterruptedException ex) { 
+			   return;
+			}
+       	}
+       	
+    }
 	
 	public static void pushSeedInQueue(Connection dbConnection) throws SQLException {
 		
@@ -45,7 +67,25 @@ public class Crawler {
 		}
 	}
 	
+	
+	
+	public static void crawl(Integer start) 
+	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException { // crawlerExecute()
+		int numberOfThreads;
+		Scanner scan =new Scanner(System.in);
+		numberOfThreads=scan.nextInt();
+		if(numberOfThreads>50)
+			return ;
+		
+		Thread[] crawlingThreads=new Thread[numberOfThreads];
+		for(Integer i=0;i<numberOfThreads;i++)
+		{
+			crawlingThreads[i]=new Thread(new Crawler());
+			crawlingThreads[i].setName(i.toString());
+			crawlingThreads[i].start();
+		}//that we will see in the next EP. inshaallah
+		
 		DatabaseConnection dbManager = new DatabaseConnection();
 		Connection dbConnection = dbManager.connect();
 		pushSeedInQueue(dbConnection);
@@ -66,17 +106,19 @@ public class Crawler {
 						break;
 					}
 					linkName = link.attr("abs:href");
-					if(extract.isURLValid(linkName))
+					if((extract.isURLValid(linkName)) && (!RobotParser.robotSafe(new URL(linkName))))
 						pushURLInQueueAndDatabase(dbConnection, linkName);
 					linkURLSIndex++;
+					crawlingIndex++;
 				}
 			}
-			crawlingIndex++;
 			} catch(Exception e) {
 				continue;
 			}
 		}
-		//String URLTest = "https://www.bbc.com/";
+		//String URLTest = "https://www.bbc.co.uk/";
+		
+		
 	}
 
 }
