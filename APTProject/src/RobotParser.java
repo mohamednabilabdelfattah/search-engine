@@ -14,6 +14,7 @@ public class RobotParser {
 	    try { urlRobot = new URL(strRobot);
 	    } catch (MalformedURLException e) {
 	        // something weird is happening, so don't trust it
+	    	System.out.println("error 1");
 	        return false;
 	    }
 
@@ -36,12 +37,13 @@ public class RobotParser {
 	    } 
 	    catch (IOException e) 
 	    {
+	    	System.out.println("error 2");
 	        return true; // if there is no robots.txt file, it is OK to search
 	    }
 
 	    if (strCommands.contains("Disallow")) // if there are no "disallow" values, then they are not blocking anything.
 	    {
-	    	System.out.println(strCommands);
+	    	//System.out.println(strCommands);
 	        String[] split = strCommands.split("\n");
 	        ArrayList<RobotRule> robotRules = new ArrayList<>();
 	        String mostRecentUserAgent = null;
@@ -72,16 +74,17 @@ public class RobotParser {
 	        for (RobotRule robotRule : robotRules)
 	        {
 	            String path = url.getPath();
-	            if (robotRule.rule.length() == 0) return true; // allows everything if BLANK
-	            if (robotRule.rule == "/") return false;       // allows nothing if /
+	            if (robotRule.rule.length() == 0) {System.out.println("error 3");return true;} // allows everything if BLANK
+	            if (robotRule.rule == "/") {System.out.println("error 4");return false; }      // allows nothing if /
 
 	            if (robotRule.rule.length() <= path.length())
 	            { 
 	                String pathCompare = path.substring(0, robotRule.rule.length());
-	                if (pathCompare.equals(robotRule.rule)) return false;
+	                if (pathCompare.equals(robotRule.rule)) {System.out.println("error 5");return false;}
 	            }
 	        }
 	    }
+	    System.out.println("error 6");
 	    return true;
 	}
 }
