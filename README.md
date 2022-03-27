@@ -3,6 +3,6 @@ it's the project of the advanced preogramming techniques in 2nd year of Computer
 ## How to run the code
 - ....will be updated
 ## libraries
-- ....will be updated
+- jsoup
 ## licence
 [MIT](https://choosealicense.com/licenses/mit/)
