@@ -1,8 +1,6 @@
 import java.io.IOException;
 import org.jsoup.nodes.Document;
-//import org.jsoup.Connection;
-//import org.jsoup.Jsoup;
-//import java.io.FileWriter;
+
 
 public class Compact_String 
 {

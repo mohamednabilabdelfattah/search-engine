@@ -4,11 +4,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import java.net.URL;
-//import java.io.File;  // Import the File class
-//import org.jsoup.nodes.Element;
-//import java.lang.Object;
-//import java.io.FileNotFoundException;  // Import this class to handle errors
-//import java.util.Scanner; // Import the Scanner class to read text files
 
 public class extract {
 	public static boolean isURLValid(String url)

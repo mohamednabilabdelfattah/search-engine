@@ -29,8 +29,9 @@ public class DBManager {
 	}
 	
 	public static void insertintoNonCrawledURLs(Connection dbConnection, String URLName, String URLCompactString) throws SQLException {
-		//ResultSet resultCompactString = stmt.executeQuery("SELECT compactString FROM akml.noncrawledurls WHERE compactString like'" + URLCompactString + "';"); 
-		//if(!resultCompactString.next()) {
+		Statement stmt = dbConnection.createStatement();
+		ResultSet resultCompactString = stmt.executeQuery("SELECT compactString FROM akml.noncrawledurls WHERE compactString like'" + URLCompactString + "';"); 
+		if(!resultCompactString.next()) {
 			String query = "INSERT INTO akml.noncrawledurls(URL, compactString)"
 			        + " values (?,?)";
 			PreparedStatement preparedStmt = dbConnection.prepareStatement(query);
@@ -38,7 +39,7 @@ public class DBManager {
 			preparedStmt.setString (2, URLCompactString);
 			
 			preparedStmt.execute();
-		//}
+		}
 	}
 
 }

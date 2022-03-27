@@ -5,15 +5,8 @@ import java.net.URL;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-//import java.util.Queue;
-//import java.util.LinkedList;
-//import java.net.MalformedURLException;
-//import org.jsoup.Jsoup;
-//import org.jsoup.helper.Validate;
-//import java.lang.Object;
 
 public class Crawler implements Runnable{
-	//private static Queue<String> URLS = new LinkedList<>();
 	private static Connection dbConnection;
 	private static DatabaseConnection dbManager;
     public static void threadWork() throws SQLException {
@@ -77,7 +70,7 @@ public class Crawler implements Runnable{
 		//robot.txt
 		
 		
-		//Statement stmt = dbConnection.createStatement();
+		//Statement stmt = dbConnection.createStatement();         //will be revised
 		//ResultSet result = stmt.executeQuery("SELECT URL FROM akml.noncrawledurls WHERE URL like'" + URLName + "';"); 
 		//if(!result.next()) {
 			String URLCompactString = Compact_String.extractCompactString(URLName).replaceAll("'", "\\\\\\\\\\\\\\\\\\\\'");// 5*4 = 20 (Every \ needs 3 \ to skip it and we need 5 in query syntax)
@@ -125,7 +118,3 @@ public class Crawler implements Runnable{
 		} 
 	}
 }
-
-
-
-
