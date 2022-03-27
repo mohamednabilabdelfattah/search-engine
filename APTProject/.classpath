@@ -6,7 +6,8 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="F:/Eng/programs/mysqlconnector/mysql-connector.jar"/>
+	<classpathentry kind="lib" path="src/jsoup-1.14.3.jar"/>
+	<classpathentry kind="lib" path="src/mysql-connector.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/javafx"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jsoup"/>
 	<classpathentry kind="output" path="bin"/>

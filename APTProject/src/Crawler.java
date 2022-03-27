@@ -1,169 +1,129 @@
 import java.sql.*;
-import java.util.Queue;
 import java.util.Scanner;
-import java.util.LinkedList;
 import java.io.*;
 import java.net.URL;
-import java.net.MalformedURLException;
-import org.jsoup.Jsoup;
-import org.jsoup.helper.Validate;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import java.lang.Object;
+//import java.util.Queue;
+//import java.util.LinkedList;
+//import java.net.MalformedURLException;
+//import org.jsoup.Jsoup;
+//import org.jsoup.helper.Validate;
+//import java.lang.Object;
 
-public class Crawler{
-	private static Queue<String> URLS = new LinkedList<>();
-    public static void threadWork(Connection dbConnection) throws SQLException {
+public class Crawler implements Runnable{
+	//private static Queue<String> URLS = new LinkedList<>();
+	private static Connection dbConnection;
+	private static DatabaseConnection dbManager;
+    public static void threadWork() throws SQLException {
     	 while(true) {
-         	Statement stmt = dbConnection.createStatement();
-    		ResultSet result = stmt.executeQuery("SELECT ID, URL, compactString FROM akml.noncrawledurls LIMIT 1;"); 
+    		 ResultSet result;
+    		 try {
+    			 //get one URL by the thread
+    			 result = DBManager.getOneURL(dbConnection);
+			} catch (Exception e) {
+				break;
+			}
     		if(!result.next()) {
     			break;
     		}
     		String URLName = result.getString("URL");
     		String URLCompactString = result.getString("compactString");
     		Integer ID = result.getInt("ID");
-    		String query = "DELETE FROM akml.noncrawledurls WHERE ID = " + ID + ";";
-			PreparedStatement preparedStmt = dbConnection.prepareStatement(query);
-			preparedStmt.execute();
+    		//delete it from NonCrawled
+    		DBManager.deleteRowNonCrawled(dbConnection,ID);
  			Document doc = extract.downloadFile(URLName);
- 			stmt = dbConnection.createStatement();
-    		result = stmt.executeQuery("SELECT URL FROM akml.crawledurls WHERE URL = '" + URLName + "';");  
+ 			//stmt = dbConnection.createStatement();
+    		//result = stmt.executeQuery("SELECT URL FROM akml.crawledurls WHERE URL = '" + URLName + "';"); 
     		if(!result.next()) {
-	 			query = "INSERT INTO akml.crawledurls(URL, compactString)"
-				        + " values (?,?)";
-				preparedStmt = dbConnection.prepareStatement(query);
-				preparedStmt.setString (1, URLName);
-				preparedStmt.setString (2, URLCompactString);
-				
-				preparedStmt.execute();
-	 			
+    			try {
+    				// insert URL into crawledURLS
+    				DBManager.insertintoCrawledURLs(dbConnection,URLName,URLCompactString);
+				} catch (Exception e) {
+					continue;
+				}
 	 			try {
-	 				if(doc != null) {
-	 					Elements links = extract.extractLinks(doc);
-	 					String linkName = "";
-	 					int linkURLSIndex = 0;
-	 					for(Element link:links) {
-	 						if(linkURLSIndex==50) {
-	 							break;
-	 						}
-	 						System.out.println("I entered");
-	 						linkName = link.attr("abs:href");
-	 						if((extract.isURLValid(linkName)) && (RobotParser.robotSafe(new URL(linkName))))
-	 							{
-	 							pushURLIntoNonCrawled(dbConnection, linkName);
-	 							}
-	 						else
-	 							continue;
-	 					
-	 						linkURLSIndex++;
-	 					}
-	 				}
+		 				if(doc != null) {
+		 					// extractLinks
+		 					Elements links = extract.extractLinks(doc);
+		 					String linkName = "";
+		 					// initialize linkURLSIndex to not exceed 50 URl from one site
+		 					Integer linkURLSIndex = 0;
+		 					for(Element link:links) {
+		 						if(linkURLSIndex==50) {
+		 							break;
+		 						}
+		 						System.out.println("linkURLSIndex :"+linkURLSIndex.toString());
+		 						linkName = link.attr("abs:href");
+		 						if((extract.isURLValid(linkName)) && (RobotParser.robotSafe(new URL(linkName))))
+		 							{
+		 								//push URL Into NonCrawled
+		 								pushURLIntoNonCrawled(linkName);
+		 							}
+		 						else {
+		 							continue;
+		 						}
+		 						linkURLSIndex++;
+		 					}
+		 				}
 	 				} catch(Exception e) {
 	 					continue;
 	 				}
 	    	 }
     	 }
-    	 
-       	
     }
-	
-	/*public static void pushSeedInQueue(Connection dbConnection) throws SQLException {
-		
-		Statement stmt = dbConnection.createStatement();
-		ResultSet result = stmt.executeQuery("SELECT URL FROM akml.urls LIMIT 50;"); // REQUIRED: frequency of visited pages every crawling
-		String URLName;
-		
-		while(result.next()) {
-		URLName = result.getString("URL");
-		URLS.add(URLName);
-		}
-	}*/
-	
-	public static void pushURLIntoNonCrawled(Connection dbConnection, String URLName) throws SQLException, IOException {
+	public static void pushURLIntoNonCrawled(String URLName) throws SQLException, IOException {
 		//robot.txt
-		Statement stmt = dbConnection.createStatement();
-		ResultSet result = stmt.executeQuery("SELECT URL FROM akml.noncrawledurls WHERE URL like'" + URLName + "';"); 
-		if(!result.next()) {
+		
+		
+		//Statement stmt = dbConnection.createStatement();
+		//ResultSet result = stmt.executeQuery("SELECT URL FROM akml.noncrawledurls WHERE URL like'" + URLName + "';"); 
+		//if(!result.next()) {
 			String URLCompactString = Compact_String.extractCompactString(URLName).replaceAll("'", "\\\\\\\\\\\\\\\\\\\\'");// 5*4 = 20 (Every \ needs 3 \ to skip it and we need 5 in query syntax)
-			ResultSet resultCompactString = stmt.executeQuery("SELECT compactString FROM akml.noncrawledurls WHERE compactString like'" + URLCompactString + "';"); 
-			if(!resultCompactString.next()) {
-				String query = "INSERT INTO akml.noncrawledurls(URL, compactString)"
-				        + " values (?,?)";
-				PreparedStatement preparedStmt = dbConnection.prepareStatement(query);
-				preparedStmt.setString (1, URLName);
-				preparedStmt.setString (2, URLCompactString);
-				
-				preparedStmt.execute();
+			try {
+				// inserting to non crawled
+				DBManager.insertintoNonCrawledURLs(dbConnection,URLName,URLCompactString);
+			} catch (Exception e) {
+				return;
 			}
-		}
+		//}
 	}
 	
-	
-	
-	
-	//public static void crawl(Integer start) 
-	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException { // crawlerExecute()
+		System.out.println("Enter number of Threads: ");
 		int numberOfThreads;
 		Scanner scan =new Scanner(System.in);
 		numberOfThreads=scan.nextInt();
-		if(numberOfThreads>50)
+		scan.close();
+		if(numberOfThreads>50) {
+			System.out.println("Number of Threads is too much");
 			return ;
-		
-		DatabaseConnection dbManager = new DatabaseConnection();
-		Connection dbConnection = dbManager.connect();
+		}
+		dbManager = new DatabaseConnection();
+		dbConnection = dbManager.connect();
+		if(dbConnection == null) {
+			System.out.println("Couldn't connect");
+			return ;
+		}
+		// creating array of threads
 		Thread[] crawlingThreads=new Thread[numberOfThreads];
 		for(Integer i=0;i<numberOfThreads;i++)
 		{
-			new Thread(new Runnable() {
-				public void run() { try {
-					Crawler.threadWork(dbConnection);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} }
-			}).start();
-			/*crawlingThreads[i]=new Thread(new Crawler());
-			crawlingThreads[i].setName(i.toString());
-			crawlingThreads[i].start();*/
-		}//that we will see in the next EP. inshaallah
-		
-		
-		//pushSeedInQueue(dbConnection);
-		/*int crawlingIndex = 0;
-		while(!URLS.isEmpty()) {
-			try {
-			if(crawlingIndex == 5000)
-				break;
-			String URLName = URLS.poll();
-			Document doc = extract.downloadFile(URLName);
-			
-			if(doc != null) {
-				Elements links = extract.extractLinks(doc);
-				String linkName = "";
-				int linkURLSIndex = 0;
-				for(Element link:links) {
-					if(linkURLSIndex==50) {
-						break;
-					}
-					linkName = link.attr("abs:href");
-					if((extract.isURLValid(linkName)) && (!RobotParser.robotSafe(new URL(linkName))))
-						pushURLInQueueAndDatabase(dbConnection, linkName);
-					linkURLSIndex++;
-					crawlingIndex++;
-				}
-			}
-			} catch(Exception e) {
-				continue;
-			}
-		}*/
-		//String URLTest = "https://www.bbc.com/";
-		// String URLTest = "https://www.tvquran.com/";
-		
-		
+			//assigning the array
+			crawlingThreads[i] = new Thread(new Crawler());
+			// starting the thread
+			crawlingThreads[i].start();
+		}
 	}
-
+	@Override
+	public void run() {
+		try {
+			Crawler.threadWork();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+	}
 }
 
 
