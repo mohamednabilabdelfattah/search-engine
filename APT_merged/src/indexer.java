@@ -11,9 +11,7 @@ import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Filter;
 
 import static java.lang.Thread.sleep;
@@ -46,6 +44,7 @@ public class indexer {
 //        col.insertOne(NewEntry);
         return col;
     }
+
 
     public static void insertToMongo(MongoCollection col, entry e) throws SQLException, ClassNotFoundException {
 
@@ -125,6 +124,8 @@ public class indexer {
         int indexedCount=0;
         //outer loop
         Connection dbConnection = connectionMysql();
+        //to test
+        //Set<String> hash_Set = new HashSet<String>();
         while(true)
         {
             ResultSet result;
@@ -178,13 +179,18 @@ public class indexer {
             for (String s : tf.keySet()) {
                 int[]arr = tf.get(s);
                 entry URLentry = new entry(URLName,s,(double)arr[0],(double)arr[1],(double)arr[2]) ;
+                //to test
+                //hash_Set.add(s);
                 insertToMongo(newCollection,URLentry);
             }
-
+            //remove the link
+            DBManager.deleteRowCrawled(dbConnection,URLName);
             //continue to make the form required by hany
             //........
 
         }
+        //      System.out.println(hash_set.size());
+
     }
 
 }

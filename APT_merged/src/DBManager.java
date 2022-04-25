@@ -57,5 +57,11 @@ public class DBManager {
 		ResultSet result = stmt.executeQuery("SELECT URL FROM akml.crawledurls LIMIT 1;");
 		return result;
 	}
+	//to delete from crawled
+	public static void deleteRowCrawled(Connection dbConnection, String URL) throws SQLException {
+		String query = "DELETE FROM akml.crawledurls WHERE URL = '" + URL + "';";
+		PreparedStatement preparedStmt = dbConnection.prepareStatement(query);
+		preparedStmt.execute();
+	}
 
 }
