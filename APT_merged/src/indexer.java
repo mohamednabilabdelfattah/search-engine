@@ -65,7 +65,7 @@ public class indexer {
                     df++;
                     //Double idf = Math.log(TotalNumDoc/df);
                     NewDoc.put("DF",df);
-                    Document temp = new Document("link", e.link)
+                    Document temp = new Document("Link", e.link)
                             .append("TF", e.TfBody+e.TfHeader+e.TfDescription)
                             .append("TFHeader",e.TfHeader)
                             .append("TFDescription",e.TfDescription)

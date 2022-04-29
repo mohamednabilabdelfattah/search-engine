@@ -12,7 +12,7 @@ public class splitPage {
         object=" "+object+" ";
         object=object.replaceAll("[^a-zA-Z0-9]", " ");
         @SuppressWarnings("resource")
-        BufferedReader reader=new BufferedReader(new FileReader("C:\\Users\\LENOVO\\Desktop\\APT_merged\\stopwords.txt"));
+        BufferedReader reader=new BufferedReader(new FileReader("stopwords.txt"));
         String line=reader.readLine();
         while (line != null)
         {
