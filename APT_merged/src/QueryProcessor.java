@@ -29,7 +29,10 @@ public class QueryProcessor {
             if (found != null){
                 ArrayList<Document> links = (ArrayList<Document>) found.get("Links");
                 for (Document link : links) {
-                    arrayLinks.add((String) link.get("Link"));
+                    String temporary = (String) link.get("Link");
+                    if(temporary==null)
+                        temporary=(String) link.get("link"); //shoud be edited ya haaaannnny
+                    arrayLinks.add(temporary);
                 }
             }
         }
@@ -46,11 +49,16 @@ public class QueryProcessor {
         Set<String> arrayWords = new HashSet<>();
 
         // links where words are mentioned
-        Set<String> arrayLinks = new  HashSet<>();
+        Set<String> arrayLink = new  HashSet<>();
 
-        QueryProcessorFunc(query,arrayWords,arrayLinks);
+        QueryProcessorFunc(query,arrayWords,arrayLink);
         System.out.println();
-        System.out.println(arrayWords);
-        System.out.println(arrayLinks);
+        for (String word: arrayWords) {
+            System.out.println(word);
+        }
+        for (String link: arrayLink) {
+            System.out.println(link);
+        }
+
     }
 }
