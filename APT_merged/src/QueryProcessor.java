@@ -30,8 +30,6 @@ public class QueryProcessor {
                 ArrayList<Document> links = (ArrayList<Document>) found.get("Links");
                 for (Document link : links) {
                     String temporary = (String) link.get("Link");
-                    if(temporary==null)
-                        temporary=(String) link.get("link"); //shoud be edited ya haaaannnny
                     arrayLinks.add(temporary);
                 }
             }
