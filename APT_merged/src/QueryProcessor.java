@@ -12,7 +12,7 @@ public class QueryProcessor {
     public static void QueryProcessorFunc(String query,Set<String> arrayWords, Set<String> arrayLinks) throws IOException {
         // stop words
         splitPage splitObject=new splitPage();
-        String temp = splitObject.readFile(query);
+        String temp = splitObject.readFile(query.toLowerCase());
         String[] arr = temp.split(" ");
         // stemming
         stemmer stem = new stemmer();
