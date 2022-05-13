@@ -23,6 +23,11 @@ public class GUI extends HttpServlet {
                     "        <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">\n" +
                     "        <title>AKML Search</title>\n" +
                     "        <style>\n" +
+                    "            b{\n" +
+                    "            color: white;    \n"+
+                  //  "                font-size: 24px;\n" +
+                  //  "                font-weight: 100;\n" +
+                    "           }\n"+
                     "            #textQuery{\n" +
                     "                width: 600px;\n" +
                     "                height: 35px;\n" +
@@ -165,6 +170,44 @@ public class GUI extends HttpServlet {
                     "            p{\n" +
                     "                color: white;\n" +
                     "            }\n" +
+                    "@keyframes show{\n" +
+                    "                0%{\n" +
+                    "                    opacity:0;\n" +
+                    "                    transform: scale(0.9);\n" +
+                    "                }\n" +
+                    "                100%{\n" +
+                    "                    opacity:1;\n" +
+                    "                    transform: scale(1);\n" +
+                    "                }\n" +
+                    "            }\n" +
+                    "            .pagination{\n" +
+                    "                width: 100%;\n" +
+                    "                float: left;\n" +
+                    "                padding:15px;\n" +
+                    "                text-align: center;\n" +
+                    "            }\n" +
+                    "            .pagination div{\n" +
+                    "                display: inline-block;\n" +
+                    "                margin:0 10px;\n" +
+                    "            }\n" +
+                    "            .pagination .page{\n" +
+                    "                color:gray;\n" +
+                    "            }\n" +
+                    "            .pagination .prev,.pagination .next{\n" +
+                    "            color:rgb(250, 247, 247);\n" +
+                    "            font-size:15px;\n" +
+                    "            padding:7px 15px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            }\n" +
+                    "            .pagination .prev:hover,.pagination .next:hover{\n" +
+                    "            background-color: rgb(141, 13, 239);\n" +
+                    "            }\n" +
+                    "\n" +
+                    "            .pagination .prev.disabled,\n" +
+                    "            .pagination .next.disabled{\n" +
+                    "                color:gray;\n" +
+                    "                pointer-events: none;\n" +
+                    "            }"+
                     "\n" +
                     "        </style>\n" +
                     "    </head>\n" +
@@ -199,15 +242,23 @@ public class GUI extends HttpServlet {
                     "                <div class=\"row\">\n" +
                     "                    <div class=\"col-lg-12\">\n" +
                     "                        <div class=\"ibox float-e-margins\">\n" +
-                    "                            <div class=\"ibox-content\">";
+                    "                            <div class=\"ibox-content\">"+
+                    "                               <div class=\"Pagination-Results\">";
 
             String end = "</div>\n" +
+                    "                                    <div class=\"pagination\">\n" +
+                    "                                    <div class=\"prev\">Prev</div>\n" +
+                    "                                    <div class=\"page\">Page <span class=\"page-num\"></span></div>\n" +
+                    "                                    <div class=\"next\">Next</div>\n" +
+                    "                                </div>"+
+                    "                           </div>\n"+
                     "                        </div>\n" +
                     "                    </div>\n" +
                     "                </div>\n" +
                     "            </div>\n" +
                     "        </div>\n" +
                     "        \n" +
+                    "<script src=\"script.js\"></script>\n"+
                     "    </body>\n" +
                     "</html>";
 
@@ -224,81 +275,49 @@ public class GUI extends HttpServlet {
             {
                 resultLink += "<h3>Your search - "+ result +" - did not match any documents.</h3>";
             }
-//            Integer i = 0;
+//          Integer i = 0;
             String title = "";
+            String boldText = "";
+
             for (String link:set) {
 
                 // Download Doc
                 Document doc = extract.downloadFile(link);
                 // Search for the word to make it bold
                 String body = doc.body().text();
-
-                String senPre = "";
-                String senCurr = "";
-                String senNext = "";
-                //String firstThree = "";
-
-                BreakIterator iterator = BreakIterator.getSentenceInstance(Locale.US);
-                iterator.setText(body);
-                int startBody = iterator.first();
-                boolean foundWord = false;
-                for (int endBody = iterator.next();
-                     endBody != BreakIterator.DONE;
-                     startBody = endBody, endBody = iterator.next()) {
-                    //System.out.println(body.substring(startBody,endBody));
-//                    if (senPre.isEmpty())
-//                    {
-//                        firstThree += senNext;
-//                    }
-                    senPre = senCurr;
-                    senCurr = senNext;
-                    senNext = body.substring(startBody,endBody);
-                    if (!senCurr.isEmpty()) {
-                        for (int i = 0; i < words.length; i++) {
-
-                            if (senCurr.contains(words[i])){
-                                foundWord = true;
-                                break;
-                            }
-                        }
-                        if (foundWord == true)
-                        {
-                            break;
+                boldText = body.substring(100,700);
+                String [] printedResultsArr = {};
+                for (int i = 0; i < words.length; i++) {
+                    //boldText.replaceAll(words[i].toLowerCase(), "</p><b>"+words[i].toLowerCase()+"</b><p>");
+                    printedResultsArr = boldText.split(" ");
+                    for (int j = 0; j < printedResultsArr.length; j++) {
+                        if (printedResultsArr[j].equalsIgnoreCase(words[i])) {
+                            printedResultsArr[j] = "<b>" + printedResultsArr[j] + "</b>";
                         }
                     }
-
                 }
-                String boldText = "";
-//                senCurr += senNext;
-                if (foundWord == true)
-                {
-                    boldText = senPre + senCurr + senNext;
-//                    boldText += senPre;
-
-//                    boldText += senCurr;
+                boldText = "... ";
+                for (int i = 0; i < printedResultsArr.length; i++) {
+                    boldText += printedResultsArr[i] + " ";
                 }
-                else
-                {
-                    boldText = doc.select("meta[name=description]").get(0).attr("content").toLowerCase();
-                }
-                boldText = boldText.toLowerCase();
-                for (int i = 0; i < words.length; i++) {
-                    boldText.replaceAll(words[i].toLowerCase(), "<strong>"+words[i].toLowerCase()+"</strong>");
-                }
+                boldText += " ...";
 
                 // get title
                 title = doc.title();
 
+                resultLink += "<div class=\"item\">\n";
                 resultLink += "<div class=\"hr-line-dashed\"></div>\n" +
                         "                                <div class=\"search-result\">";
 
                 resultLink += "<h3><a href=\""+link+"\">"+ title +"</a></h3>\n" +
-                        "                                    <a href=\""+link+"\" class=\"search-link\">"+link+"</a>\n" +
+                        "                                    <a href=\""+link+"\" class=\"search-link\">"+link+"</a>\n"+
                         "                                    <p>\n" +
                         "                                        "+ boldText +"\n" +
                         "                                    </p>";
 
-                resultLink += "</div>";
+
+                resultLink += "</div>\n";
+                resultLink += "</div>\n";
 //                resultLink += "<h1>"+i.toString()+"</h1>";
 //                resultLink += "<a href =\""+link+"\">"+link+"</a>";
 //                i++;
