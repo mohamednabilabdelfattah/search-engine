@@ -492,9 +492,12 @@ public class GUI extends HttpServlet {
             String [] words = resultStop.split(" ");
             //System.out.println(words);
 
+            boolean onetimeError = false;
+
             if(set.isEmpty())
             {
                 resultLink += "<p>Your search --- "+ result +" --- did not match any documents.</p>";
+                onetimeError = true;
             }
 //          Integer i = 0;
             String title = "";
@@ -548,7 +551,7 @@ public class GUI extends HttpServlet {
 
 
             }
-            if (boldText.isEmpty()){
+            if (boldText.isEmpty() && !onetimeError){
                 resultLink += "<p>Your search --- "+ result +" --- did not match any documents.</p>";
             }
             response.setContentType("text/html");
@@ -574,6 +577,7 @@ public class GUI extends HttpServlet {
                 result2 += "];";
                 result2 += "\n</script>";
                 result2 += "<script src=\"autoComplete.js\"></script>";
+                result2 += "<script src=\"micSearch.js\"></script>";
             } catch (SQLException e) {
             }
             String page = start
@@ -606,6 +610,7 @@ public class GUI extends HttpServlet {
             result += "];";
             result += "\n</script>";
             result += "<script src=\"autoComplete.js\"></script>";
+            result += "<script src=\"micSearch.js\"></script>";
             response.setContentType("text/html");
             String page = akmlStart + result +akmlEnd;
             response.getWriter().println(page);
