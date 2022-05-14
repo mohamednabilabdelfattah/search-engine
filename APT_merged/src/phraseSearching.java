@@ -11,13 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class phraseSearching {
-    public static void main(String[] args) throws IOException {
+    public static String[] phraseSearch(String query) throws IOException {
         QueryProcessor basicProcessor =new QueryProcessor();
-        System.out.println("What do want to search about .....: ");
-        String query;
-        Scanner scan = new Scanner(System.in);
-        query = scan.nextLine();
-        scan.close();
         Pattern p = Pattern.compile("\"([^\"]*)\"");
         Matcher m = p.matcher(query);
         if (m.find()) {
@@ -30,22 +25,32 @@ public class phraseSearching {
         Set<String> arrayLink = new HashSet<>();
         Set<String> newArrayLink = new HashSet<>();
 
-        basicProcessor.QueryProcessorFunc(query, arrayWords, arrayLink);
+        QueryProcessor.QueryProcessorFunc(query, arrayWords, arrayLink);
 
 
+        query=query.toLowerCase();
         // phrase searching started here
         for (String link:
-             arrayLink) {
+                arrayLink) {
             Document currentPage = extract.downloadFile(link);
-            String currnetPageContent = currentPage.body().text();
+            String currnetPageContent = currentPage.body().text().toLowerCase();
             if(currnetPageContent.contains(query))
                 newArrayLink.add(link);
         }
-        for (String link:
-             newArrayLink) {
-            System.out.println(link);
-
+        return newArrayLink.toArray(new String[0]);
+    }
+    public static void main(String[] args) throws IOException {
+        System.out.println("What do want to search about .....: ");
+        String query;
+        Scanner scan = new Scanner(System.in);
+        query = scan.nextLine();
+        scan.close();
+        String result[]=phraseSearch(query);
+        for(String link:result)
+        {
+            System.out.println(link+"\n");
         }
+
     }
 
 }

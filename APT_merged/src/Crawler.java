@@ -49,10 +49,12 @@ public class Crawler implements Runnable{
 							}
 							System.out.println("linkURLSIndex :"+linkURLSIndex.toString());
 							linkName = link.attr("abs:href");
-							if((extract.isURLValid(linkName)) && (RobotParser.robotSafe(new URL(linkName))))
+						 	if((extract.isURLValid(linkName)) && (RobotParser.robotSafe(new URL(linkName))))
 							{
 								//push URL Into NonCrawled
 								pushURLIntoNonCrawled(linkName);
+								//update the url rank
+								DBManager.updateTheRankOfTheURL(dbConnection,linkName);
 							}
 							else {
 								continue;
@@ -103,10 +105,13 @@ public class Crawler implements Runnable{
 		Thread[] crawlingThreads=new Thread[numberOfThreads];
 		for(Integer i=0;i<numberOfThreads;i++)
 		{
+			/*
 			//assigning the array
 			crawlingThreads[i] = new Thread(new Crawler());
 			// starting the thread
 			crawlingThreads[i].start();
+			*/
+			Crawler.threadWork();
 		}
 	}
 	@Override
