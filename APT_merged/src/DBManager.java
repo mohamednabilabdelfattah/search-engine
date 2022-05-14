@@ -30,6 +30,7 @@ public class DBManager {
 
 	public static void insertintoNonCrawledURLs(Connection dbConnection, String URLName, String URLCompactString) throws SQLException {
 		Statement stmt = dbConnection.createStatement();
+		URLCompactString = URLCompactString.replace("'", "\\'");
 		ResultSet resultCompactString = stmt.executeQuery("SELECT compactString FROM akml.noncrawledurls WHERE compactString like'" + URLCompactString + "';");
 		if(!resultCompactString.next()) {
 			String query = "INSERT INTO akml.noncrawledurls(URL, compactString)"
@@ -65,7 +66,7 @@ public class DBManager {
 	}
 	public static void updateTheRankOfTheURL(Connection dbConnection,String url)throws SQLException{
 		Statement stmt = dbConnection.createStatement();
-		String query = "SELECT * FROM akml.pageRank LIMIT 1;";
+		String query = "SELECT * FROM akml.pageRank WHERE URL = '"+url+"';";
 		ResultSet result = stmt.executeQuery(query);
 		if(result.next())
 		{
@@ -89,5 +90,7 @@ public class DBManager {
 		ResultSet result = stmt.executeQuery(query);
 		return result.getInt("rank");
 	}
+
+
 
 }

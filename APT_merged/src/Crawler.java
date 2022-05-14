@@ -105,13 +105,11 @@ public class Crawler implements Runnable{
 		Thread[] crawlingThreads=new Thread[numberOfThreads];
 		for(Integer i=0;i<numberOfThreads;i++)
 		{
-			/*
 			//assigning the array
 			crawlingThreads[i] = new Thread(new Crawler());
 			// starting the thread
 			crawlingThreads[i].start();
-			*/
-			Crawler.threadWork();
+
 		}
 	}
 	@Override

@@ -18,9 +18,7 @@ public class QueryProcessor {
         stemmer stem = new stemmer();
         stem.stemThis(arr);
 
-        for (int i = 0; i < arr.length; i++) {
-            arrayWords.add(arr[i]);
-        }
+        arrayWords.addAll(Arrays.asList(arr));
 
         // Links
         MongoCollection collection = indexer.connectionMongo();
@@ -30,8 +28,6 @@ public class QueryProcessor {
                 ArrayList<Document> links = (ArrayList<Document>) found.get("Links");
                 for (Document link : links) {
                     String temporary = (String) link.get("Link");
-                    if(temporary==null)
-                        temporary=(String) link.get("link"); //shoud be edited ya haaaannnny
                     arrayLinks.add(temporary);
                 }
             }

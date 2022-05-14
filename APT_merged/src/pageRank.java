@@ -90,22 +90,26 @@ class GFG{
     // Driver Code
 }
 
-// This code is contributed by Ayush Choudhary
-/*
-* [nabil] : this code isn't in the core of the project so we get it from www.geeksforgeeks.com and edited it*/
-
 
 public class pageRank {
     // Java implementation of QuickSort
 
 
-    public static ArrayList<String> rankByPopluarity(Connection dbConnection, ArrayList<String>links) throws SQLException {
+    public static ArrayList<String> rankByPopluarity(Connection dbConnection, ArrayList<pair>links) throws SQLException {
         ArrayList<pair> URLS = new ArrayList<>();
-        pair currentURL = new pair();
+        pair currentURL =null;
         //make the array of pairs from the arry of string and from the data base
-        for (String link:links) {
-            currentURL.link = link;
-            currentURL.rank = DBManager.getTheRankOfURL(dbConnection,link);
+        //and merge the two arrays
+        double rankOfIdf;
+        double rankOfPop;
+
+
+        for (int i=0;i< links.size();i++ ) {
+            currentURL = links.get(i);
+            rankOfIdf =currentURL.rank;
+            rankOfPop =  DBManager.getTheRankOfURL(dbConnection, currentURL.link);
+            currentURL.rank = rankOfIdf*rankOfPop/(rankOfIdf+rankOfPop);
+
             URLS.add(currentURL);
         }
         for(int i =0;i< links.size();i=i+10)
@@ -113,7 +117,12 @@ public class pageRank {
             GFG.quickSort(URLS,i,i+10);
         }
         //another approach from [Karim] : we may rearrange by give it weights to mix the two algorithms
-        return links;
+        ArrayList<String> result=new ArrayList<>();
+        for(int i = 0;i< URLS.size();i++)
+        {
+            result.add(URLS.get(i).link);
+        }
+        return result;
     }
 
     public static void main(String[] args)
