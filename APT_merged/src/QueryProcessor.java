@@ -12,7 +12,7 @@ public class QueryProcessor {
     public static void QueryProcessorFunc(String query,Set<String> arrayWords, Set<String> arrayLinks) throws IOException {
         // stop words
         splitPage splitObject=new splitPage();
-        String temp = splitObject.readFile(query);
+        String temp = splitObject.readFile(query.toLowerCase());
         String[] arr = temp.split(" ");
         // stemming
         stemmer stem = new stemmer();
@@ -30,8 +30,6 @@ public class QueryProcessor {
                 ArrayList<Document> links = (ArrayList<Document>) found.get("Links");
                 for (Document link : links) {
                     String temporary = (String) link.get("Link");
-                    if(temporary==null)
-                        temporary=(String) link.get("link"); //shoud be edited ya haaaannnny
                     arrayLinks.add(temporary);
                 }
             }

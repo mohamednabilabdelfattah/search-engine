@@ -2,6 +2,7 @@
   <library name="lucene-snowball-3.0.2">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/src/lucene-snowball-3.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../Programs/Tomcat/apache-tomcat-10.0.20/lib/servlet-api.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
