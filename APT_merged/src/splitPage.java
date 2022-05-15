@@ -1,12 +1,14 @@
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
+
+import jakarta.servlet.ServletContext;
 import org.jsoup.nodes.Document;
 import org.jsoup.Jsoup;
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 public class splitPage {
     @SuppressWarnings("resource")
     //[ToDO] : add the headers
+
     public static void splitheaders(String URL,String[] h,int index) throws IOException
     {
         Document doc= Jsoup.connect(URL).get();

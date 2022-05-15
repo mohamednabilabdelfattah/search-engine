@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class phraseSearching {
+
     public static String[] phraseSearch(String query,Set<String>arrayWords) throws IOException {
 
         QueryProcessor basicProcessor =new QueryProcessor();
@@ -36,6 +37,7 @@ public class phraseSearching {
             if(currnetPageContent.contains(query))
                 newArrayLink.add(link);
         }
+
         return newArrayLink.toArray(new String[0]);
     }
 //    public static void main(String[] args) throws IOException {

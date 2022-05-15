@@ -95,4 +95,18 @@ public class DBManager {
 	}
 
 
+	public static void insertintoQueries(Connection dbConnection, String querySearch) throws SQLException {
+		String query = "INSERT INTO akml.queries(query)"
+				+ " values (?)";
+		PreparedStatement preparedStmt = dbConnection.prepareStatement(query);
+		preparedStmt.setString (1, querySearch);
+
+		preparedStmt.execute();
+	}
+	public static ResultSet getFromQueries(Connection dbConnection) throws SQLException {
+		Statement stmt = dbConnection.createStatement();
+		ResultSet result = stmt.executeQuery("SELECT query FROM akml.queries;");
+		return result;
+	}
+
 }
