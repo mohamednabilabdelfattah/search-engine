@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="src">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jsoup-1.14.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/mysql-connector.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lucene-snowball-3.0.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
