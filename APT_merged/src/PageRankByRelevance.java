@@ -20,6 +20,15 @@ public class PageRankByRelevance {
         }
     }
 
+    static double max(double[] IDF)
+    {
+        double max = 0;
+        for(double iter : IDF)
+        {
+            max = (iter > max)? iter : max;
+        }
+        return  max;
+    }
     public static double[] calculateIDF(int[] numOfDocContainingTerm, int totalNumOfDoc, String[] q) {
 
         double[] IDF = new double[q.length];
@@ -56,14 +65,31 @@ public class PageRankByRelevance {
             for(String word:arrayWords)
             {
                 TF[iter2] = MongoConnection.getT_DFScores(word,link);
-                IDF[iter2]=Math.log10((double)indexedCount/TF[iter2][10]);
+                if(TF[iter2]==null) {   //if null then the link isn't in the links of other words
+                    IDF[iter2] = 0;
+                    iter2++;
+                    continue;
+                }
+                IDF[iter2]=Math.log10((double)indexedCount/TF[iter2][10]); //TF[iter2] = DF
                 for(int i = 0 ;i<10;i++)
                     scores[i]+=TF[iter2][i];
-                iter2++;
                 linkIDF += IDF[iter2];
+                iter2++;
             }
             iter2 = 0;
-            arr.add(new pair(link,scores[0]*linkIDF+scores[1]*0.8+scores[2]*0.6+scores[3]*0.1+scores[4]*0.7+scores[5]*0.6+scores[6]*0.5+scores[7]*0.4+scores[8]*0.3+scores[9]*0.2));
+            System.out.println(link);
+            System.out.println("TF :"+String.valueOf(scores[0]));
+            System.out.println("TFTitle :"+String.valueOf(scores[1]));
+            System.out.println("TFDescription :"+String.valueOf(scores[2]));
+            System.out.println("TFBody :"+String.valueOf(scores[3]));
+            System.out.println("TFh1 :"+String.valueOf(scores[4]));
+            System.out.println("TFh2 :"+String.valueOf(scores[5]));
+            System.out.println("TFh3 :"+String.valueOf(scores[6]));
+            System.out.println("TFh4 :"+String.valueOf(scores[7]));
+            System.out.println("TFh5 :"+String.valueOf(scores[8]));
+            System.out.println("TFh6 :"+String.valueOf(scores[9]));
+            System.out.println("DF : "+String.valueOf(max(IDF)) );
+            arr.add(new pair(link,(scores[0]*max(IDF)/(5*scores[0]+max(IDF)))+scores[1]*0.8+scores[2]*0.6+scores[3]*0.1+scores[4]*0.7+scores[5]*0.6+scores[6]*0.5+scores[7]*0.4+scores[8]*0.3+scores[9]*0.2));
         }
 
         return arr;

@@ -112,10 +112,8 @@ public class pageRank {
 
             URLS.add(currentURL);
         }
-        for(int i =0;i< links.size();i=i+10)
-        {
-            GFG.quickSort(URLS,i,i+10);
-        }
+        GFG.quickSort(URLS,0,links.size()-1);
+
         //another approach from [Karim] : we may rearrange by give it weights to mix the two algorithms
         ArrayList<String> result=new ArrayList<>();
         for(int i = 0;i< URLS.size();i++)

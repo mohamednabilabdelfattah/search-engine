@@ -23,7 +23,7 @@ public class MongoConnection {
                     arr[7] = (double) currentLink.get("TFh4");
                     arr[8] = (double) currentLink.get("TFh5");
                     arr[9] = (double) currentLink.get("TFh6");
-                    arr[10] = (double) currentLink.get("DF");
+                    arr[10] = (double) found.get("DF");
                     return arr;
                 }
             }

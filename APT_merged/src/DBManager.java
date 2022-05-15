@@ -86,11 +86,13 @@ public class DBManager {
 	}
 	public static int getTheRankOfURL(Connection dbConnection ,String url) throws SQLException {
 		Statement stmt = dbConnection.createStatement();
-		String query = "SELECT * FROM akml.pagerank WHERE url = " + url + ";";
+		String query = "SELECT * FROM akml.pagerank WHERE url = '" + url + "';";
 		ResultSet result = stmt.executeQuery(query);
-		return result.getInt("rank");
+		if (result.next()) {
+			return result.getInt("rank");
+		}
+		return 0;
 	}
-
 
 
 }
