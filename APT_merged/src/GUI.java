@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.BreakIterator;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
@@ -484,7 +486,8 @@ public class GUI extends HttpServlet {
             }
 
             /////////////////////////////////////////////////////////////
-            Set<String> set = phraseSearching.phraseSearchingFunc(result);
+//            Set<String> set = phraseSearching.phraseSearchingFunc(result);
+            Set<String> set =  new HashSet<String>(mainEngine.SearchEngine(result));
             //String result = "Done";
             String resultLink = "";
             splitPage splitObject=new splitPage();
@@ -514,9 +517,9 @@ public class GUI extends HttpServlet {
                 }
                 boldText = body.substring(100, 700);
                 String[] printedResultsArr = {};
+                //boldText.replaceAll(words[i].toLowerCase(), "</p><b>"+words[i].toLowerCase()+"</b><p>");
+                printedResultsArr = boldText.split(" ");
                 for (int i = 0; i < words.length; i++) {
-                    //boldText.replaceAll(words[i].toLowerCase(), "</p><b>"+words[i].toLowerCase()+"</b><p>");
-                    printedResultsArr = boldText.split(" ");
                     for (int j = 0; j < printedResultsArr.length; j++) {
                         if (printedResultsArr[j].equalsIgnoreCase(words[i])) {
                             printedResultsArr[j] = "<b>" + printedResultsArr[j] + "</b>";

@@ -77,19 +77,19 @@ public class PageRankByRelevance {
                 iter2++;
             }
             iter2 = 0;
-            System.out.println(link);
-            System.out.println("TF :"+String.valueOf(scores[0]));
-            System.out.println("TFTitle :"+String.valueOf(scores[1]));
-            System.out.println("TFDescription :"+String.valueOf(scores[2]));
-            System.out.println("TFBody :"+String.valueOf(scores[3]));
-            System.out.println("TFh1 :"+String.valueOf(scores[4]));
-            System.out.println("TFh2 :"+String.valueOf(scores[5]));
-            System.out.println("TFh3 :"+String.valueOf(scores[6]));
-            System.out.println("TFh4 :"+String.valueOf(scores[7]));
-            System.out.println("TFh5 :"+String.valueOf(scores[8]));
-            System.out.println("TFh6 :"+String.valueOf(scores[9]));
-            System.out.println("DF : "+String.valueOf(max(IDF)) );
-            arr.add(new pair(link,(scores[0]*max(IDF)/(5*scores[0]+max(IDF)))+scores[1]*0.8+scores[2]*0.6+scores[3]*0.1+scores[4]*0.7+scores[5]*0.6+scores[6]*0.5+scores[7]*0.4+scores[8]*0.3+scores[9]*0.2));
+//            System.out.println(link);
+//            System.out.println("TF :"+String.valueOf(scores[0]));
+//            System.out.println("TFTitle :"+String.valueOf(scores[1]));
+//            System.out.println("TFDescription :"+String.valueOf(scores[2]));
+//            System.out.println("TFBody :"+String.valueOf(scores[3]));
+//            System.out.println("TFh1 :"+String.valueOf(scores[4]));
+//            System.out.println("TFh2 :"+String.valueOf(scores[5]));
+//            System.out.println("TFh3 :"+String.valueOf(scores[6]));
+//            System.out.println("TFh4 :"+String.valueOf(scores[7]));
+//            System.out.println("TFh5 :"+String.valueOf(scores[8]));
+//            System.out.println("TFh6 :"+String.valueOf(scores[9]));
+//            System.out.println("DF : "+String.valueOf(max(IDF)) );
+            arr.add(new pair(link,(scores[0]*max(IDF)*5+scores[1]*0.8+scores[2]*0.6+scores[3]*0.1+scores[4]*0.7+scores[5]*0.6+scores[6]*0.5+scores[7]*0.4+scores[8]*0.3+scores[9]*0.2)));
         }
 
         return arr;
