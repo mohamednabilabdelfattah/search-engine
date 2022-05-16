@@ -9,7 +9,7 @@ public class RobotParser {
 	{
 		String strHost = url.getHost();
 
-		String strRobot = "http://" + strHost + "/robots.txt";
+		String strRobot = "https://" + strHost + "/robots.txt";
 		URL urlRobot;
 		try { urlRobot = new URL(strRobot);
 		} catch (MalformedURLException e) {
@@ -22,7 +22,7 @@ public class RobotParser {
 		try
 		{
 			InputStream urlRobotStream = urlRobot.openStream();
-			byte b[] = new byte[1000];
+			byte b[] = new byte[1500];
 			int numRead = urlRobotStream.read(b);
 			strCommands = new String(b, 0, numRead);
 			while (numRead != -1) {
@@ -55,7 +55,7 @@ public class RobotParser {
 					int start = line.indexOf(":") + 1;
 					int end   = line.length();
 					mostRecentUserAgent = line.substring(start, end).trim();
-					if(mostRecentUserAgent.contains("*") && !mostRecentUserAgent.contains("Java"))
+					if(!mostRecentUserAgent.equals("*") && !mostRecentUserAgent.contains("Java"))
 						mostRecentUserAgent = null;
 
 				}
@@ -74,8 +74,8 @@ public class RobotParser {
 			for (RobotRule robotRule : robotRules)
 			{
 				String path = url.getPath();
-				if (robotRule.rule.length() == 0) {System.out.println("error 3");return true;} // allows everything if BLANK
-				if (robotRule.rule == "/") {System.out.println("error 4");return false; }      // allows nothing if /
+				if (robotRule.rule.length() == 0) {System.out.println("you are allowed");return true;} // allows everything if BLANK
+				if (robotRule.rule == "/") {System.out.println("you aren't allowed from all");return false; }      // allows nothing if /
 
 				if (robotRule.rule.length() <= path.length())
 				{
@@ -84,7 +84,7 @@ public class RobotParser {
 				}
 			}
 		}
-		System.out.println("error 6");
+		System.out.println("you are allowed");
 		return true;
 	}
 }

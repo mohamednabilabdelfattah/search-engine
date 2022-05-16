@@ -18,9 +18,7 @@ public class QueryProcessor {
         stemmer stem = new stemmer();
         stem.stemThis(arr);
 
-        for (int i = 0; i < arr.length; i++) {
-            arrayWords.add(arr[i]);
-        }
+        arrayWords.addAll(Arrays.asList(arr));
 
         // Links
         MongoCollection collection = indexer.connectionMongo();

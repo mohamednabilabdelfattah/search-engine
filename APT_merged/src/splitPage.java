@@ -8,6 +8,18 @@ import org.jsoup.Jsoup;
 public class splitPage {
     @SuppressWarnings("resource")
     //[ToDO] : add the headers
+
+    public static void splitheaders(String URL,String[] h,int index) throws IOException
+    {
+        Document doc= Jsoup.connect(URL).get();
+        h[0]=" ";
+        if(doc.select("h"+index).toString() != null)
+        {
+            splitPage s=new splitPage();
+            h[0]=doc.select("h"+index).toString().toLowerCase();
+            h[0]=s.readFile(h[0]);
+        }
+    }
     public String readFile(String object) throws IOException
     {
         object=" "+object+" ";
@@ -30,6 +42,7 @@ public class splitPage {
     public void split (String URL,String[] titleArray, String[] descriptionArray,String[] bodyArray/*,String title,String body,String description*/) throws IOException
     {
         Document doc=Jsoup.connect(URL).get();
+
 //		____________split_title______________
 
 
