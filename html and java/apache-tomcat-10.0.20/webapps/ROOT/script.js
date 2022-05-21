@@ -24,14 +24,14 @@ let index=1;
           next.classList.add("disabled");
       }
       else{
-        next.classList.remove("disabled");	
+        next.classList.remove("disabled");  
       }
 
       if(index==1){
           prev.classList.add("disabled");
       }
       else{
-        prev.classList.remove("disabled");	
+        prev.classList.remove("disabled");  
       }
  }
 
