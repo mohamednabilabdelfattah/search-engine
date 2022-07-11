@@ -1,0 +1,277 @@
+\hypertarget{class_d_b_manager}{}\doxysection{DBManager Class Reference}
+\label{class_d_b_manager}\index{DBManager@{DBManager}}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static Result\+Set \mbox{\hyperlink{class_d_b_manager_ac6723763cb6e2a042f9634dd891b7e1f}{get\+One\+URL}} (Connection db\+Connection)  throws SQLException 
+\item 
+static void \mbox{\hyperlink{class_d_b_manager_a23c5d6e7ff8c821d5347aa5977a79b4a}{delete\+Row\+Non\+Crawled}} (Connection db\+Connection, Integer ID)  throws SQLException 
+\item 
+static void \mbox{\hyperlink{class_d_b_manager_ad8e2e3be54f08757dbc31d5fd0ba2f60}{insertinto\+Crawled\+URLs}} (Connection db\+Connection, String URLName, String URLCompact\+String)  throws SQLException 
+\item 
+static void \mbox{\hyperlink{class_d_b_manager_a48fb1f1b610a626405a65dea19dfd8af}{insertinto\+Crawled\+URLs\+V2}} (Connection db\+Connection, String URLCompact\+String, String URLName, String title, String body, String description, String h1, String h2, String h3, String h4, String h5, String h6)  throws SQLException 
+\item 
+static void \mbox{\hyperlink{class_d_b_manager_a4327130074f660c88000ec5b2758ea3c}{insertinto\+Non\+Crawled\+URLs}} (Connection db\+Connection, String URLName, String URLCompact\+String)  throws SQLException 
+\item 
+static void \mbox{\hyperlink{class_d_b_manager_ad98937a59ae094c0cf70e6d6a665059d}{insertinto\+Indexed}} (Connection db\+Connection, String URLName, String compact\+String)  throws SQLException 
+\item 
+static int \mbox{\hyperlink{class_d_b_manager_a90b0e3d04b6c0ac6a899650c555a8b10}{get\+Number\+Of\+Crawled\+Pages}} (Connection db\+Connection)  throws SQLException 
+\item 
+static Result\+Set \mbox{\hyperlink{class_d_b_manager_a5199bd51c819afa4a340716674e826d9}{get\+One\+URLFrom\+Crawled}} (Connection db\+Connection)  throws SQLException 
+\item 
+static Result\+Set \mbox{\hyperlink{class_d_b_manager_ae9926be01400dfd5b905128e0aadb1b3}{get\+One\+Body\+From\+Crawledv2}} (Connection db\+Connection, String url)  throws SQLException 
+\item 
+static Result\+Set \mbox{\hyperlink{class_d_b_manager_a900c74decd372cf807b27afcca5ab9e5}{get\+One\+Body\+And\+Title\+From\+Crawledv2}} (Connection db\+Connection, String url)  throws SQLException 
+\item 
+static void \mbox{\hyperlink{class_d_b_manager_ae831d15b8fda53484490fe77627d63dc}{delete\+Row\+Crawled}} (Connection db\+Connection, String URL)  throws SQLException 
+\item 
+static void \mbox{\hyperlink{class_d_b_manager_a1a06c0ab17c245a02e6c637e89d7cc08}{update\+The\+Rank\+Of\+The\+URL}} (Connection db\+Connection, String url)  throws SQLException
+\item 
+static int \mbox{\hyperlink{class_d_b_manager_a937b56ae6cd150cf6b00e06654198bea}{get\+The\+Rank\+Of\+URL}} (Connection db\+Connection, String url)  throws SQLException 
+\item 
+static void \mbox{\hyperlink{class_d_b_manager_aea8edd1953cb9620b8b3aa626034c8d0}{insertinto\+Queries}} (Connection db\+Connection, String query\+Search)  throws SQLException 
+\item 
+static Result\+Set \mbox{\hyperlink{class_d_b_manager_a4bb2c40c82bf875242aa98b08fcfda16}{get\+From\+Queries}} (Connection db\+Connection)  throws SQLException 
+\item 
+static int \mbox{\hyperlink{class_d_b_manager_a40fbdc8d74f28d884ac6c2a7b4800cd9}{get\+Num\+Of\+Crawled\+URLS}} (Connection dbconnection)  throws SQLException  
+\item 
+static int \mbox{\hyperlink{class_d_b_manager_abea300b29c57b35b678a1761124063a1}{get\+Num\+Of\+Indexed}} (Connection dbconnection)  throws SQLException  
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_b_manager_ae831d15b8fda53484490fe77627d63dc}\label{class_d_b_manager_ae831d15b8fda53484490fe77627d63dc}} 
+\index{DBManager@{DBManager}!deleteRowCrawled@{deleteRowCrawled}}
+\index{deleteRowCrawled@{deleteRowCrawled}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{deleteRowCrawled()}{deleteRowCrawled()}}
+{\footnotesize\ttfamily static void DBManager.\+delete\+Row\+Crawled (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection,  }\item[{String}]{URL }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/d9e/class_d_b_manager_ae831d15b8fda53484490fe77627d63dc_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_a23c5d6e7ff8c821d5347aa5977a79b4a}\label{class_d_b_manager_a23c5d6e7ff8c821d5347aa5977a79b4a}} 
+\index{DBManager@{DBManager}!deleteRowNonCrawled@{deleteRowNonCrawled}}
+\index{deleteRowNonCrawled@{deleteRowNonCrawled}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{deleteRowNonCrawled()}{deleteRowNonCrawled()}}
+{\footnotesize\ttfamily static void DBManager.\+delete\+Row\+Non\+Crawled (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection,  }\item[{Integer}]{ID }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/d9e/class_d_b_manager_a23c5d6e7ff8c821d5347aa5977a79b4a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_a4bb2c40c82bf875242aa98b08fcfda16}\label{class_d_b_manager_a4bb2c40c82bf875242aa98b08fcfda16}} 
+\index{DBManager@{DBManager}!getFromQueries@{getFromQueries}}
+\index{getFromQueries@{getFromQueries}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{getFromQueries()}{getFromQueries()}}
+{\footnotesize\ttfamily static Result\+Set DBManager.\+get\+From\+Queries (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=323pt]{d8/d9e/class_d_b_manager_a4bb2c40c82bf875242aa98b08fcfda16_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_a90b0e3d04b6c0ac6a899650c555a8b10}\label{class_d_b_manager_a90b0e3d04b6c0ac6a899650c555a8b10}} 
+\index{DBManager@{DBManager}!getNumberOfCrawledPages@{getNumberOfCrawledPages}}
+\index{getNumberOfCrawledPages@{getNumberOfCrawledPages}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{getNumberOfCrawledPages()}{getNumberOfCrawledPages()}}
+{\footnotesize\ttfamily static int DBManager.\+get\+Number\+Of\+Crawled\+Pages (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_d_b_manager_a40fbdc8d74f28d884ac6c2a7b4800cd9}\label{class_d_b_manager_a40fbdc8d74f28d884ac6c2a7b4800cd9}} 
+\index{DBManager@{DBManager}!getNumOfCrawledURLS@{getNumOfCrawledURLS}}
+\index{getNumOfCrawledURLS@{getNumOfCrawledURLS}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{getNumOfCrawledURLS()}{getNumOfCrawledURLS()}}
+{\footnotesize\ttfamily static int DBManager.\+get\+Num\+Of\+Crawled\+URLS (\begin{DoxyParamCaption}\item[{Connection}]{dbconnection }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/d9e/class_d_b_manager_a40fbdc8d74f28d884ac6c2a7b4800cd9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_abea300b29c57b35b678a1761124063a1}\label{class_d_b_manager_abea300b29c57b35b678a1761124063a1}} 
+\index{DBManager@{DBManager}!getNumOfIndexed@{getNumOfIndexed}}
+\index{getNumOfIndexed@{getNumOfIndexed}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{getNumOfIndexed()}{getNumOfIndexed()}}
+{\footnotesize\ttfamily static int DBManager.\+get\+Num\+Of\+Indexed (\begin{DoxyParamCaption}\item[{Connection}]{dbconnection }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/d9e/class_d_b_manager_abea300b29c57b35b678a1761124063a1_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_a900c74decd372cf807b27afcca5ab9e5}\label{class_d_b_manager_a900c74decd372cf807b27afcca5ab9e5}} 
+\index{DBManager@{DBManager}!getOneBodyAndTitleFromCrawledv2@{getOneBodyAndTitleFromCrawledv2}}
+\index{getOneBodyAndTitleFromCrawledv2@{getOneBodyAndTitleFromCrawledv2}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{getOneBodyAndTitleFromCrawledv2()}{getOneBodyAndTitleFromCrawledv2()}}
+{\footnotesize\ttfamily static Result\+Set DBManager.\+get\+One\+Body\+And\+Title\+From\+Crawledv2 (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection,  }\item[{String}]{url }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=343pt]{d8/d9e/class_d_b_manager_a900c74decd372cf807b27afcca5ab9e5_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_ae9926be01400dfd5b905128e0aadb1b3}\label{class_d_b_manager_ae9926be01400dfd5b905128e0aadb1b3}} 
+\index{DBManager@{DBManager}!getOneBodyFromCrawledv2@{getOneBodyFromCrawledv2}}
+\index{getOneBodyFromCrawledv2@{getOneBodyFromCrawledv2}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{getOneBodyFromCrawledv2()}{getOneBodyFromCrawledv2()}}
+{\footnotesize\ttfamily static Result\+Set DBManager.\+get\+One\+Body\+From\+Crawledv2 (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection,  }\item[{String}]{url }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/d9e/class_d_b_manager_ae9926be01400dfd5b905128e0aadb1b3_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_ac6723763cb6e2a042f9634dd891b7e1f}\label{class_d_b_manager_ac6723763cb6e2a042f9634dd891b7e1f}} 
+\index{DBManager@{DBManager}!getOneURL@{getOneURL}}
+\index{getOneURL@{getOneURL}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{getOneURL()}{getOneURL()}}
+{\footnotesize\ttfamily static Result\+Set DBManager.\+get\+One\+URL (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/d9e/class_d_b_manager_ac6723763cb6e2a042f9634dd891b7e1f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_a5199bd51c819afa4a340716674e826d9}\label{class_d_b_manager_a5199bd51c819afa4a340716674e826d9}} 
+\index{DBManager@{DBManager}!getOneURLFromCrawled@{getOneURLFromCrawled}}
+\index{getOneURLFromCrawled@{getOneURLFromCrawled}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{getOneURLFromCrawled()}{getOneURLFromCrawled()}}
+{\footnotesize\ttfamily static Result\+Set DBManager.\+get\+One\+URLFrom\+Crawled (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/d9e/class_d_b_manager_a5199bd51c819afa4a340716674e826d9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_a937b56ae6cd150cf6b00e06654198bea}\label{class_d_b_manager_a937b56ae6cd150cf6b00e06654198bea}} 
+\index{DBManager@{DBManager}!getTheRankOfURL@{getTheRankOfURL}}
+\index{getTheRankOfURL@{getTheRankOfURL}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{getTheRankOfURL()}{getTheRankOfURL()}}
+{\footnotesize\ttfamily static int DBManager.\+get\+The\+Rank\+Of\+URL (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection,  }\item[{String}]{url }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/d9e/class_d_b_manager_a937b56ae6cd150cf6b00e06654198bea_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_ad8e2e3be54f08757dbc31d5fd0ba2f60}\label{class_d_b_manager_ad8e2e3be54f08757dbc31d5fd0ba2f60}} 
+\index{DBManager@{DBManager}!insertintoCrawledURLs@{insertintoCrawledURLs}}
+\index{insertintoCrawledURLs@{insertintoCrawledURLs}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{insertintoCrawledURLs()}{insertintoCrawledURLs()}}
+{\footnotesize\ttfamily static void DBManager.\+insertinto\+Crawled\+URLs (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection,  }\item[{String}]{URLName,  }\item[{String}]{URLCompact\+String }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/d9e/class_d_b_manager_ad8e2e3be54f08757dbc31d5fd0ba2f60_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_a48fb1f1b610a626405a65dea19dfd8af}\label{class_d_b_manager_a48fb1f1b610a626405a65dea19dfd8af}} 
+\index{DBManager@{DBManager}!insertintoCrawledURLsV2@{insertintoCrawledURLsV2}}
+\index{insertintoCrawledURLsV2@{insertintoCrawledURLsV2}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{insertintoCrawledURLsV2()}{insertintoCrawledURLsV2()}}
+{\footnotesize\ttfamily static void DBManager.\+insertinto\+Crawled\+URLs\+V2 (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection,  }\item[{String}]{URLCompact\+String,  }\item[{String}]{URLName,  }\item[{String}]{title,  }\item[{String}]{body,  }\item[{String}]{description,  }\item[{String}]{h1,  }\item[{String}]{h2,  }\item[{String}]{h3,  }\item[{String}]{h4,  }\item[{String}]{h5,  }\item[{String}]{h6 }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/d9e/class_d_b_manager_a48fb1f1b610a626405a65dea19dfd8af_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_ad98937a59ae094c0cf70e6d6a665059d}\label{class_d_b_manager_ad98937a59ae094c0cf70e6d6a665059d}} 
+\index{DBManager@{DBManager}!insertintoIndexed@{insertintoIndexed}}
+\index{insertintoIndexed@{insertintoIndexed}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{insertintoIndexed()}{insertintoIndexed()}}
+{\footnotesize\ttfamily static void DBManager.\+insertinto\+Indexed (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection,  }\item[{String}]{URLName,  }\item[{String}]{compact\+String }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/d9e/class_d_b_manager_ad98937a59ae094c0cf70e6d6a665059d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_a4327130074f660c88000ec5b2758ea3c}\label{class_d_b_manager_a4327130074f660c88000ec5b2758ea3c}} 
+\index{DBManager@{DBManager}!insertintoNonCrawledURLs@{insertintoNonCrawledURLs}}
+\index{insertintoNonCrawledURLs@{insertintoNonCrawledURLs}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{insertintoNonCrawledURLs()}{insertintoNonCrawledURLs()}}
+{\footnotesize\ttfamily static void DBManager.\+insertinto\+Non\+Crawled\+URLs (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection,  }\item[{String}]{URLName,  }\item[{String}]{URLCompact\+String }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/d9e/class_d_b_manager_a4327130074f660c88000ec5b2758ea3c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_aea8edd1953cb9620b8b3aa626034c8d0}\label{class_d_b_manager_aea8edd1953cb9620b8b3aa626034c8d0}} 
+\index{DBManager@{DBManager}!insertintoQueries@{insertintoQueries}}
+\index{insertintoQueries@{insertintoQueries}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{insertintoQueries()}{insertintoQueries()}}
+{\footnotesize\ttfamily static void DBManager.\+insertinto\+Queries (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection,  }\item[{String}]{query\+Search }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=327pt]{d8/d9e/class_d_b_manager_aea8edd1953cb9620b8b3aa626034c8d0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_d_b_manager_a1a06c0ab17c245a02e6c637e89d7cc08}\label{class_d_b_manager_a1a06c0ab17c245a02e6c637e89d7cc08}} 
+\index{DBManager@{DBManager}!updateTheRankOfTheURL@{updateTheRankOfTheURL}}
+\index{updateTheRankOfTheURL@{updateTheRankOfTheURL}!DBManager@{DBManager}}
+\doxysubsubsection{\texorpdfstring{updateTheRankOfTheURL()}{updateTheRankOfTheURL()}}
+{\footnotesize\ttfamily static void DBManager.\+update\+The\+Rank\+Of\+The\+URL (\begin{DoxyParamCaption}\item[{Connection}]{db\+Connection,  }\item[{String}]{url }\end{DoxyParamCaption}) throws SQLException\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/d9e/class_d_b_manager_a1a06c0ab17c245a02e6c637e89d7cc08_icgraph}
+\end{center}
+\end{figure}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_d_b_manager_8java}{DBManager.\+java}}\end{DoxyCompactItemize}
