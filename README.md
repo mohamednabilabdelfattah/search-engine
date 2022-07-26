@@ -17,7 +17,7 @@ between them in java language programming.
 - Java
 - HTML
 - CSS
-- SQLite
+- MySQL
 - MongoDB
 
 
